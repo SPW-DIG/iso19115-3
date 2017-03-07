@@ -511,7 +511,7 @@
       </xsl:for-each>
 
 
-      <xsl:for-each select="mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Organisation">
+      <xsl:for-each select="mri:pointOfContact[contains(cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue, 'custodian')]/cit:CI_Responsibility/cit:party/cit:CI_Organisation">
         <xsl:variable name="orgName" select="string(cit:name/*)"/>
         <xsl:copy-of select="gn-fn-iso19115-3:index-field('orgName', cit:name, $langId)"/>
 
