@@ -355,9 +355,18 @@
         <h3 class="bordertitel"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'spatialreference')"/></h3>
       </div>
       <div class="geoportail-section-content bordercontent">
-        <xsl:call-template name="formatEPSG">
-          <xsl:with-param name="epsgParam" select="$metadata/mdb:referenceSystemInfo/mrs:MD_ReferenceSystem/mrs:referenceSystemIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString" />
-        </xsl:call-template>
+        <xsl:choose>
+          <xsl:when test="$metadata/mdb:referenceSystemInfo/mrs:MD_ReferenceSystem/mrs:referenceSystemIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString!=''">
+            <xsl:for-each select="$metadata/mdb:referenceSystemInfo/mrs:MD_ReferenceSystem/mrs:referenceSystemIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString">
+              <xsl:call-template name="formatEPSG">  
+                <xsl:with-param name="epsgParam" select="."/>
+              </xsl:call-template>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'notfilledin')"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </div>
       </div>
       </div>
@@ -916,12 +925,19 @@
   </xsl:template>
   <xsl:template name="formatEPSG">
     <xsl:param name="epsgParam"/>
-    <xsl:choose>
-         <xsl:when test="tokenize($epsgParam,'/')[last()] = '31371'">Belge 1972 / Belgian Lambert 72 (EPSG: 31370)</xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'notfilledin')"/>
-        </xsl:otherwise>
-    </xsl:choose>
+    <p>
+      <xsl:choose>
+          <xsl:when test="tokenize($epsgParam,'/')[last()] = '31370'">
+             <xsl:text> - Belge 1972 / Belgian Lambert 72 (EPSG: 31370)</xsl:text>
+          </xsl:when>
+           <xsl:when test="tokenize($epsgParam,'/')[last()] = '4326'">
+             <xsl:text> - WGS 84 (EPSG:4326)</xsl:text>
+           </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$epsgParam"/>
+          </xsl:otherwise>
+      </xsl:choose>
+    </p>
   </xsl:template>
 
   <xsl:template match="/root/mdb:MD_Metadata/mdb:distributionInfo/*/mrd:distributor/mrd:MD_Distributor/mrd:distributionOrderProcess/mrd:MD_StandardOrderProcess/mrd:orderingInstructions/gco:CharacterString">
