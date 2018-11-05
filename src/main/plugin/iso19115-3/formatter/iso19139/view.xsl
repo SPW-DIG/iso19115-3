@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+=======
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+>>>>>>> upstream/3.4.x
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -42,11 +67,19 @@
                 xmlns:gco2="http://standards.iso.org/iso/19115/-3/gco/1.0"
                 xmlns:gml32="http://www.opengis.net/gml/3.2"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
                 exclude-result-prefixes="#all">
+
   <xsl:import href="../../convert/ISO19139/toISO19139.xsl"/>
 
-  <xsl:template match="/" priority="999">
-    <xsl:for-each select="root/mdb:*">
+  <xsl:output method="xml"
+              indent="yes"/>
+
+  <xsl:variable name="metadata"
+                select="//gmd:MD_Metadata"/>
+
+  <xsl:template match="/" priority="99">
+    <xsl:for-each select="$metadata">
       <xsl:variable name="nameSpacePrefix">
         <xsl:call-template name="getNamespacePrefix"/>
       </xsl:variable>
