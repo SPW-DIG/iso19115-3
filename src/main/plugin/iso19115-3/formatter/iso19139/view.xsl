@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-=======
 <!--
   ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
   ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
@@ -23,7 +21,6 @@
   ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
->>>>>>> upstream/3.4.x
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -76,7 +73,7 @@
               indent="yes"/>
 
   <xsl:variable name="metadata"
-                select="//gmd:MD_Metadata"/>
+                select="//mdb:MD_Metadata"/>
 
   <xsl:template match="/" priority="99">
     <xsl:for-each select="$metadata">
