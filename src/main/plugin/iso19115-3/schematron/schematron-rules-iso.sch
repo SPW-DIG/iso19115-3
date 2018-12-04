@@ -716,7 +716,7 @@
 
 
       <sch:let name="scopeCode"
-               value="mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue"/>
+               value="mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue/string(.)"/>
 
 
       <sch:let name="scopeCodeName" value="normalize-space(mdb:name)"/>
@@ -1146,7 +1146,7 @@
 
 
       <sch:let name="maintenanceAndUpdateFrequency"
-               value="mmi:maintenanceAndUpdateFrequency/                 mmi:MD_MaintenanceFrequencyCode/@codeListValue[normalize-space(.) != '']"/>
+               value="mmi:maintenanceAndUpdateFrequency/                 mmi:MD_MaintenanceFrequencyCode/@codeListValue[normalize-space(.) != '']/string(.)"/>
 
 
       <sch:let name="hasCodeOrUserFreq"
