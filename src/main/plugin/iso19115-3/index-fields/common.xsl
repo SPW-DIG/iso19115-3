@@ -63,6 +63,11 @@
                         then $inspire-thesaurus//skos:Concept
                         else ''"/>
 
+  <xsl:variable name="geoportail-wallon-thesaurus"
+                select="document(concat('file:///', replace($thesauriDir, '\\', '/'), '/external/thesauri/theme/Themes_geoportail_wallon.rdf'))"/>
+  <xsl:variable name="geoportail-wallon-theme"
+                select="$geoportail-wallon-thesaurus//*"/>
+
   <xsl:variable name="metadata"
                 select="/mdb:MD_Metadata"/>
 
@@ -386,6 +391,36 @@
 
       </xsl:for-each>
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+      <!-- - - - - - - - - - Geoportail thesaurus label list - - - - - - - - -->
+      <xsl:for-each select="mri:descriptiveKeywords[
+                         contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
+                                   'Thèmes du géoportail wallon')]/*/mri:keyword">
+        <xsl:variable name="keywordGeoportailthesaurus" select="gco:CharacterString"/>
+        <xsl:variable name="geoportailThemeTest"
+                      select="$geoportail-wallon-theme[skos:prefLabel = $keywordGeoportailthesaurus]/@rdf:about"/>
+        <xsl:variable name="geoportailThemeNohierarchyTest"
+                      select="$geoportail-wallon-theme[skos:prefLabel = $keywordGeoportailthesaurus]/@rdf:about"/>
+        <!--xsl:for-each select="$geoportail-wallon-theme[@rdf:about=$geoportailThemeTest]/skos:prefLabel">
+          <xsl:variable name="listOfKeywordsW"
+                      select="string(.)"/>
+          <xsl:message>
+            TEST listOfKeywordsW:<xsl:value-of select="$listOfKeywordsW"/>
+          </xsl:message>
+        </xsl:for-each-->
+        <xsl:if test="$geoportailThemeTest != ''">
+          <xsl:variable name="geoportailThemeValueFR"
+                        select="$geoportail-wallon-theme[@rdf:about=$geoportailThemeTest]/skos:prefLabel[@xml:lang='fr']"/>
+          <xsl:variable name="geoportailThemeValueEN"
+                        select="$geoportail-wallon-theme[@rdf:about=$geoportailThemeTest]/skos:prefLabel[@xml:lang='en']"/>
+          <Field name="geoportailthemelabel" string="{$geoportailThemeTest}={$geoportailThemeValueFR}|{$geoportailThemeValueEN}" store="true"
+                 index="true"/>
+          <Field name="geoportailthemelabelnohierarchy" string="{$geoportailThemeNohierarchyTest}" store="true"
+                 index="true"/>
+        </xsl:if>
+      </xsl:for-each>
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
 
       <xsl:for-each select="//mri:MD_Keywords">
         <xsl:variable name="thesaurusTitle"
