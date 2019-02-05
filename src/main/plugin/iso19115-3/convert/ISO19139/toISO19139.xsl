@@ -309,82 +309,83 @@
   </xsl:template>
 
 
+  <xsl:template match="mrd:onLine" priority="1000">
+
+    <!-- Add a new distribution section after existing one with
+    documents referenced in other sections of the record. -->
+    <xsl:if test="$mergeAllOnlineResourcesInDistribution and position() = 1">
+      <!-- Define custom function depending on the section of origin.
+      Values are an extension of ISO19139 to be able to make distinction
+      between documents. -->
+      <xsl:variable name="functionMap">
+        <entry key="portrayalCatalogueCitation" value="information.portrayal"/>
+        <entry key="additionalDocumentation" value="information.lineage"/>
+        <entry key="specification" value="information.qualitySpecification"/>
+        <entry key="reportReference" value="information.qualityReport"/>
+        <entry key="featureCatalogueCitation" value="information.content"/>
+      </xsl:variable>
+
+      <xsl:variable name="hasRelation"
+                    select="count(ancestor::mdb:MD_Metadata/descendant::*[
+                              local-name() = $functionMap/entry/@key]/
+                                *[cit:onlineResource/*/cit:linkage/
+                                  gco2:CharacterString != '']) > 0"/>
+      <xsl:if test="$hasRelation">
+        <xsl:for-each select="ancestor::mdb:MD_Metadata/descendant::*[
+            local-name() = $functionMap/entry/@key
+            ]/*[cit:onlineResource/*/cit:linkage/gco2:CharacterString != '']">
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <xsl:apply-templates select="cit:onlineResource/cit:CI_OnlineResource/cit:linkage/gco2:CharacterString"/>
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+              </gmd:protocol>
+
+              <xsl:call-template name="writeCharacterStringElement">
+                <xsl:with-param name="elementName" select="'gmd:applicationProfile'"/>
+                <xsl:with-param name="nodeWithStringToWrite" select="cit:applicationProfile"/>
+              </xsl:call-template>
+
+              <xsl:call-template name="writeCharacterStringElement">
+                <xsl:with-param name="elementName" select="'gmd:name'"/>
+                <xsl:with-param name="nodeWithStringToWrite" select="cit:title"/>
+              </xsl:call-template>
+
+              <xsl:call-template name="writeCharacterStringElement">
+                <xsl:with-param name="elementName" select="'gmd:description'"/>
+                <xsl:with-param name="nodeWithStringToWrite" select="cit:onlineResource/cit:CI_OnlineResource/cit:description"/>
+              </xsl:call-template>
+
+              <xsl:variable name="type" select="local-name(..)"/>
+              <xsl:variable name="function" select="$functionMap/entry[@key = $type]/@value"/>
+              <xsl:if test="$function">
+                <gmd:function>
+                  <gmd:CI_OnLineFunctionCode
+                    codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                    codeListValue="{$function}"/>
+                </gmd:function>
+              </xsl:if>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+        </xsl:for-each>
+      </xsl:if>
+    </xsl:if>
+
+    <gmd:onLine>
+      <xsl:apply-templates select="*"/>
+    </gmd:onLine>
+  </xsl:template>
+
   <xsl:template match="mdb:distributionInfo">
     <gmd:distributionInfo>
       <xsl:apply-templates select="@*"/>
       <gmd:MD_Distribution>
         <xsl:apply-templates select="mrd:MD_Distribution/@*"/>
         <xsl:apply-templates select="mrd:MD_Distribution/*"/>
-
-        <!-- Add a new distribution section after existing one with
-        documents referenced in other sections of the record. -->
-        <xsl:if test="$mergeAllOnlineResourcesInDistribution and position() = 1">
-          <!-- Define custom function depending on the section of origin.
-          Values are an extension of ISO19139 to be able to make distinction
-          between documents. -->
-          <xsl:variable name="functionMap">
-            <entry key="portrayalCatalogueCitation" value="information.portrayal"/>
-            <entry key="additionalDocumentation" value="information.lineage"/>
-            <entry key="specification" value="information.qualitySpecification"/>
-            <entry key="reportReference" value="information.qualityReport"/>
-            <entry key="featureCatalogueCitation" value="information.content"/>
-          </xsl:variable>
-
-          <xsl:variable name="hasRelation"
-                        select="count(ancestor::mdb:MD_Metadata/descendant::*[
-                              local-name() = $functionMap/entry/@key]/
-                                *[cit:onlineResource/*/cit:linkage/
-                                  gco2:CharacterString != '']) > 0"/>
-          <xsl:if test="$hasRelation">
-            <gmd:transferOptions>
-              <gmd:MD_DigitalTransferOptions>
-                <xsl:for-each select="ancestor::mdb:MD_Metadata/descendant::*[
-                local-name() = $functionMap/entry/@key
-                ]/*[cit:onlineResource/*/cit:linkage/gco2:CharacterString != '']">
-                  <gmd:onLine>
-                    <gmd:CI_OnlineResource>
-                      <gmd:linkage>
-                        <xsl:apply-templates select="cit:onlineResource/cit:CI_OnlineResource/cit:linkage/gco2:CharacterString"/>
-                      </gmd:linkage>
-                      <gmd:protocol>
-                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
-                      </gmd:protocol>
-
-                      <xsl:call-template name="writeCharacterStringElement">
-                        <xsl:with-param name="elementName" select="'gmd:applicationProfile'"/>
-                        <xsl:with-param name="nodeWithStringToWrite" select="cit:applicationProfile"/>
-                      </xsl:call-template>
-
-                      <xsl:call-template name="writeCharacterStringElement">
-                        <xsl:with-param name="elementName" select="'gmd:name'"/>
-                        <xsl:with-param name="nodeWithStringToWrite" select="cit:title"/>
-                      </xsl:call-template>
-
-                      <xsl:call-template name="writeCharacterStringElement">
-                        <xsl:with-param name="elementName" select="'gmd:description'"/>
-                        <xsl:with-param name="nodeWithStringToWrite" select="cit:onlineResource/cit:CI_OnlineResource/cit:description"/>
-                      </xsl:call-template>
-
-                      <xsl:variable name="type" select="local-name(..)"/>
-                      <xsl:variable name="function" select="$functionMap/entry[@key = $type]/@value"/>
-                      <xsl:if test="$function">
-                        <gmd:function>
-                          <gmd:CI_OnLineFunctionCode
-                            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                            codeListValue="{$function}"/>
-                        </gmd:function>
-                      </xsl:if>
-                    </gmd:CI_OnlineResource>
-                  </gmd:onLine>
-                </xsl:for-each>
-              </gmd:MD_DigitalTransferOptions>
-            </gmd:transferOptions>
-          </xsl:if>
-        </xsl:if>
-
       </gmd:MD_Distribution>
     </gmd:distributionInfo>
-
   </xsl:template>
 
   <xsl:template match="mdb:contentInfo">
