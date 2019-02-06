@@ -407,8 +407,6 @@
         <xsl:variable name="keywordGeoportailthesaurus" select="gco:CharacterString"/>
         <xsl:variable name="geoportailThemeTest"
                       select="$geoportail-wallon-theme[skos:prefLabel = $keywordGeoportailthesaurus]/@rdf:about"/>
-        <xsl:variable name="geoportailThemeNohierarchyTest"
-                      select="$geoportail-wallon-theme[skos:prefLabel = $keywordGeoportailthesaurus]/@rdf:about"/>
         <!--xsl:for-each select="$geoportail-wallon-theme[@rdf:about=$geoportailThemeTest]/skos:prefLabel">
           <xsl:variable name="listOfKeywordsW"
                       select="string(.)"/>
@@ -423,7 +421,7 @@
                         select="$geoportail-wallon-theme[@rdf:about=$geoportailThemeTest]/skos:prefLabel[@xml:lang='en']"/>
           <Field name="geoportailthemelabel" string="{$geoportailThemeTest}={$geoportailThemeValueFR}|{$geoportailThemeValueEN}" store="true"
                  index="true"/>
-          <Field name="geoportailthemelabelnohierarchy" string="{$geoportailThemeNohierarchyTest}" store="true"
+          <Field name="geoportailthemelabelnohierarchy" string="{$geoportailThemeTest}" store="true"
                  index="true"/>
         </xsl:if>
       </xsl:for-each>
