@@ -898,6 +898,9 @@
         <xsl:when test="ancestor-or-self::cit:CI_Citation">
           <xsl:text>gmd</xsl:text>
         </xsl:when>
+        <xsl:when test="ancestor-or-self::mri:citation">
+          <xsl:text>gmd</xsl:text>
+        </xsl:when>
         <xsl:when test="ancestor-or-self::mpc:MD_PortrayalCatalogueReference">
           <xsl:text>gmd</xsl:text>
         </xsl:when>
