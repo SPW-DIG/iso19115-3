@@ -581,7 +581,6 @@
               </template>
             </action>
 
-            <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:identifier"/>
             <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/cit:identifier"
                    or="identifier"
                    in="/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*"/>

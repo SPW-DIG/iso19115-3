@@ -1557,28 +1557,28 @@
   </codelist>
 
   <codelist name="mcc:MD_ScopeCode">
-    <entry>
+    <entry hideInEditMode="true">
       <code>attribute</code>
       <label>Attribut</label>
       <description>Les informations appliquées aux caractéristiques de
         l’attribut
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>attributeType</code>
       <label>Type d'attribut</label>
       <description>Les informations appliquées aux caractéristiques de
         l’entité
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>collectionHardware</code>
       <label>Collection matérielle</label>
       <description>Les informations appliquées aux caractéristiques d’une
         collection matérielle
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>collectionSession</code>
       <label>Collection de session</label>
       <description>Les informations appliquées aux caractéristiques d’une
@@ -1606,35 +1606,35 @@
         données non géographiques
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>dimensionGroup</code>
       <label>Dimension d'un groupe</label>
       <description>Les informations appliquées à un groupe</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>feature</code>
       <label>Entité</label>
       <description>Les informations appliquées à une entité</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>featureType</code>
       <label>Type d’entité</label>
       <description>Les informations appliquées à un type d’entité</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>propertyType</code>
       <label>Type de propriété</label>
       <description>Les informations appliquées à un type de propriété
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>fieldSession</code>
       <label>Champ de session</label>
       <description>Les informations appliquées aux caractéristiques d’un champ
         de session
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>software</code>
       <label>Logiciel</label>
       <description>Informations appliquées à programme ou à une routine
@@ -1649,66 +1649,66 @@
         qui définissent un comportement, tel qu’un cas d’utilisation
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>model</code>
       <label>Modèle</label>
       <description>Les informations s’appliquent à une copie ou à une imitation
         d’un objet existant ou hypothétique
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>tile</code>
       <label>Tuile</label>
       <description>Les informations s’appliquent à une mosaïque, un sousensemble
         spatial de données géographiques
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>metadata</code>
       <label>Métadonnées</label>
       <description>Les informations s’appliquent à des métadonnées</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>initiative</code>
       <label>Initiative</label>
       <description>Les informations s’appliquent à une initiativee</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>sample</code>
       <label>Echantillon</label>
       <description>Les informations s’appliquent à un échantillone</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>document</code>
       <label>Document</label>
       <description>Les informations s’appliquent à un document</description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>repository</code>
       <label>Dépôt de données</label>
       <description>Les informations s’appliquent à un dépôt de données
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>aggregate</code>
       <label>Agrégat</label>
       <description>Les informations s’appliquent à une ressource d’agrégat
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>product</code>
       <label>Produit</label>
       <description>Les métadonnées décrivant une spécification de contenu
         informationnel dans l’ISO 19131
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>collection</code>
       <label>Ensemble</label>
       <description>Les informations s’appliquent à un ensemble non structuré
       </description>
     </entry>
-    <entry>
+    <entry hideInEditMode="true">
       <code>coverage</code>
       <label>Couverture</label>
       <description>Les informations s’appliquent à une couverture</description>
