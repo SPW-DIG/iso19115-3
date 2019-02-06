@@ -23,7 +23,7 @@
                 xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
                 xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
                 xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
-                xmlns:tr="java:org.fao.geonet.services.metadata.format.SchemaLocalizations"
+                xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
                 xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
                 xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
                 xmlns:saxon="http://saxon.sf.net/"
@@ -137,7 +137,7 @@
     <div class="row rw-fr-geoportail-header-top">
       <xsl:choose>
         <xsl:when test="$metadata/mdb:metadataScope/*/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue!=''">
-          <xsl:value-of select="$metadata/mdb:metadataScope/*/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue"/>
+          <xsl:apply-templates mode="render-value" select="$metadata/mdb:metadataScope/*/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'notfilledin')"/>
@@ -146,7 +146,7 @@
       <xsl:value-of select="' | '" />
       <xsl:choose>
         <xsl:when test="$metadata/mdb:identificationInfo/*/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode/@codeListValue!=''">
-          <xsl:value-of select="$metadata/mdb:identificationInfo/*/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode/@codeListValue"/>
+          <xsl:apply-templates mode="render-value" select="$metadata/mdb:identificationInfo/*/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode/@codeListValue"/>
         </xsl:when>
         <xsl:when test="$metadata/mdb:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:ScopedName!=''">
           <xsl:value-of select="$metadata/mdb:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:ScopedName"/>
@@ -292,8 +292,12 @@
             </xsl:if>
             <xsl:if test="$metadata//mdb:identificationInfo/mri:MD_DataIdentification/mri:topicCategory/mri:MD_TopicCategoryCode">
               <h6><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'isoTheme')"/> :</h6>
-              <p><xsl:value-of select="string-join($metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:topicCategory/mri:MD_TopicCategoryCode,'; ')"/></p>
-
+              <p>
+                <xsl:for-each select="$metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:topicCategory/mri:MD_TopicCategoryCode">
+                  <xsl:apply-templates mode="render-value" select="."/>
+                  <xsl:if test="position() != last()">, </xsl:if>
+                </xsl:for-each>
+              </p>
             </xsl:if>
           </xsl:when>
           <xsl:otherwise>
@@ -794,7 +798,7 @@
             <h3><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'languageApplication')"/></h3>
           </div>
           <div class="rw-fr-geoportail-section-content">
-            <p><xsl:value-of select="$metadata/mdb:identificationInfo/*/mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue" /></p>
+            <p><xsl:apply-templates mode="render-value" select="$metadata/mdb:identificationInfo/*/mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue"/></p>
           </div>
         </xsl:when>
         <xsl:when test="$metadata/mdb:metadataScope/*/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue='dataset' or $metadata/mdb:metadataScope/*/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue='series'">
@@ -802,7 +806,7 @@
             <h3><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'languageData')"/></h3>
           </div>
           <div class="rw-fr-geoportail-section-content">
-            <p><xsl:value-of select="$metadata/mdb:identificationInfo/*/mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue" /></p>
+            <p><xsl:apply-templates mode="render-value" select="$metadata/mdb:identificationInfo/*/mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue"/></p>
           </div>
         </xsl:when>
       </xsl:choose>
@@ -1325,40 +1329,8 @@
   <xsl:template name="formatDate">
     <xsl:param name="dateParam"/>
     <xsl:param name="dateType"/>
-    <xsl:if  test="string-length(substring-before($dateParam,'T')) != 0">
-      <xsl:variable name="year" select="substring-before($dateParam,'-')"/>
-      <xsl:variable name="month" select="substring-before(substring-after($dateParam,'-'),'-')"/>
-      <xsl:variable name="day" select="substring-before(substring-after(substring-after($dateParam,'-'),'-'),'T')"/>
-      <xsl:value-of select="$day"/>
-      <xsl:if  test="$dateType='string'">
-        <xsl:value-of select="' '"/>
-        <xsl:value-of select="format-date(xs:date(concat($year,'-',$month,'-',$day)),'[MNn]')"/>
-        <xsl:value-of select="' '"/>
-      </xsl:if>
-      <xsl:if  test="$dateType='number'">
-        <xsl:value-of select="'/'"/>
-        <xsl:value-of select="$month"/>
-        <xsl:value-of select="'/'"/>
-      </xsl:if>
-      <xsl:value-of select="$year"/>
-    </xsl:if>
-    <xsl:if   test="string-length(substring-before($dateParam,'T')) = 0">
-      <xsl:variable name="year" select="substring-before($dateParam,'-')"/>
-      <xsl:variable name="month" select="substring-before(substring-after($dateParam,'-'),'-')"/>
-      <xsl:variable name="day" select="substring-after(substring-after($dateParam,'-'),'-')"/>
-      <xsl:value-of select="$day"/>
-      <xsl:if  test="$dateType='string'">
-        <xsl:value-of select="' '"/>
-        <xsl:value-of select="format-date(xs:date(concat($year,'-',$month,'-',$day)),'[MNn]')"/>
-        <xsl:value-of select="' '"/>
-      </xsl:if>
-      <xsl:if  test="$dateType='number'">
-        <xsl:value-of select="'/'"/>
-        <xsl:value-of select="$month"/>
-        <xsl:value-of select="'/'"/>
-      </xsl:if>
-      <xsl:value-of select="$year"/>
-    </xsl:if >
+
+    <span data-gn-humanize-time="{$dateParam}" data-from-now=""></span>
   </xsl:template>
   <xsl:template name="formatEPSG">
     <xsl:param name="epsgParam"/>
@@ -1400,5 +1372,55 @@
   </xsl:template>
 
 
+  <!-- Enumeration -->
+  <xsl:template mode="render-value"
+                match="mri:MD_TopicCategoryCode|
+                       mex:MD_ObligationCode[1]|
+                       msr:MD_PixelOrientationCode[1]|
+                       srv:SV_ParameterDirection[1]|
+                       reg:RE_AmendmentType">
+    <xsl:variable name="id" select="."/>
+    <xsl:variable name="codelistTranslation"
+                  select="tr:codelist-value-label(
+                            tr:create($schema),
+                            local-name(), $id)"/>
+    <xsl:choose>
+      <xsl:when test="$codelistTranslation != ''">
+
+        <xsl:variable name="codelistDesc"
+                      select="tr:codelist-value-desc(
+                            tr:create($schema),
+                            local-name(), $id)"/>
+        <span title="{$codelistDesc}"><xsl:value-of select="$codelistTranslation"/></span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$id"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+  <!-- ... Codelists -->
+  <xsl:template mode="render-value"
+                match="@codeListValue">
+    <xsl:variable name="id" select="."/>
+    <xsl:variable name="codelistTranslation"
+                  select="tr:codelist-value-label(
+                            tr:create($schema),
+                            parent::node()/local-name(), $id)"/>
+    <xsl:choose>
+      <xsl:when test="$codelistTranslation != ''">
+
+        <xsl:variable name="codelistDesc"
+                      select="tr:codelist-value-desc(
+                            tr:create($schema),
+                            parent::node()/local-name(), $id)"/>
+        <span title="{$codelistDesc}"><xsl:value-of select="$codelistTranslation"/></span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$id"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
