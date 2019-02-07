@@ -251,8 +251,8 @@
   <googleearthtext>Visualisez la donnée dans Google Earth. Attention : ce logiciel doit être installé sur votre ordinateur.</googleearthtext>
   <otherstools>Dans d'autres outils</otherstools>
   <descriptivesheet>Fiche descriptive</descriptivesheet>
-  <view>view</view>
-  <arcgismapping>ArcGIS Mapping Service</arcgismapping>
+  <view>OGC:WMS</view>
+  <arcgismapping>ESRI:REST</arcgismapping>
   <copyurl>Copier l'URL</copyurl>
   <webserviceview>Consulter la donnée via un webservice</webserviceview>
   <serviceurlview>Type et adresse du service</serviceurlview>
