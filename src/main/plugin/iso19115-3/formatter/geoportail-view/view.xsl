@@ -1308,7 +1308,7 @@
         <xsl:for-each select="/root/mdb:MD_Metadata/mdb:identificationInfo/*/mri:graphicOverview/mcc:MD_BrowseGraphic/mcc:fileName/gco:CharacterString">
           <div class="item">
             <xsl:if test="position() = 1"><xsl:attribute name="class">item active</xsl:attribute></xsl:if>
-            <img class="img-responsive center-block" src="{.}" alt="aa"/>
+            <img class="img-responsive center-block" src="{.}" alt=""/>
           </div>
         </xsl:for-each>
       </div>
