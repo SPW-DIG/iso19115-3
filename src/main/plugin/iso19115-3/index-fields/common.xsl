@@ -368,16 +368,6 @@
                  store="true" index="true"/>
         </xsl:if>
       </xsl:for-each>
-      <xsl:for-each select="mrd:transferOptions/mrd:MD_DigitalTransferOptions/*/cit:CI_OnlineResource">
-        <xsl:if test="contains(cit:protocol/gco:CharacterString,'WWW:LINK-1.0-http--link') and (cit:function/cit:CI_OnLineFunctionCode/@codeListValue  = 'browsing') and (cit:applicationProfile/gco:CharacterString='' or count(cit:applicationProfile/gco:CharacterString) = 0)">
-          <Field name="diffusionmode" string="thematicmap" store="true" index="true"/>
-        </xsl:if>
-      </xsl:for-each>
-      <xsl:for-each select="mrd:transferOptions/mrd:MD_DigitalTransferOptions/*/cit:CI_OnlineResource">
-        <xsl:if test="contains(cit:protocol/gco:CharacterString,'ESRI:REST') and (cit:function/cit:CI_OnLineFunctionCode/@codeListValue  = 'browsing')">
-          <Field name="diffusionmode" string="walonmap" store="true" index="true"/>
-        </xsl:if>
-      </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- - - - - - - - - - RW official resources  - - - - - - - - - - - - -->
@@ -706,6 +696,18 @@
         <xsl:copy-of select="gn-fn-iso19115-3:index-field('format', ., $langId)"/>
       </xsl:for-each>
 
+
+      <xsl:for-each select="mrd:transferOptions/*/mrd:onLine/*">
+        <xsl:if test="contains(cit:protocol/gco:CharacterString,'WWW:LINK-1.0-http--link') and
+                      (cit:function/cit:CI_OnLineFunctionCode/@codeListValue  = 'browsing') and
+                      (cit:applicationProfile/gco:CharacterString='' or count(cit:applicationProfile/gco:CharacterString) = 0)">
+          <Field name="diffusionmode" string="thematicmap" store="true" index="true"/>
+        </xsl:if>
+        <xsl:if test="contains(cit:protocol/gco:CharacterString,'ESRI:REST') and
+                      (cit:function/cit:CI_OnLineFunctionCode/@codeListValue  = 'browsing')">
+          <Field name="diffusionmode" string="walonmap" store="true" index="true"/>
+        </xsl:if>
+      </xsl:for-each>
 
       <!-- TODO: Need a rework -->
       <xsl:for-each select="mrd:transferOptions/mrd:MD_DigitalTransferOptions">
