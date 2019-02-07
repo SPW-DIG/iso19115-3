@@ -7920,17 +7920,16 @@ INSPIRE doit être fournie.
 
     </help>
     <helper>
-      <option value="discovery">Service de découverte (discovery)</option>
-      <option value="view">Service de visualisation (view)</option>
-      <option value="download">Service de téléchargement (download)</option>
-      <option value="transformation">Service de transformation
-        (transformation)
-      </option>
-      <option value="invoke">Service d'appel de services (invoke)</option>
-      <option value="other">Autres services (other)</option>
+      <option value="ESRI:REST">ESRI Rest</option>
       <option value="OGC:WMS">OGC Web Map Service</option>
+      <option value="OGC:WMTS">OGC Web Map Tile Service</option>
       <option value="OGC:WFS">OGC Web Feature Service</option>
       <option value="OGC:WCS">OGC Web Coverage Service</option>
+      <option value="OGC:WPS">OGC Web Processing Service</option>
+      <option value="atom:feed">ATOM feed</option>
+      <option value="Application">Application</option>
+      <option value="Carte statique">Carte statique</option>
+      <option value="Série de cartes statiques">Série de cartes statiques</option>
       <!--<option value="W3C:HTML:DOWNLOAD">Téléchargement</option>
       <option value="W3C:HTML:LINK">Information</option>-->
     </helper>

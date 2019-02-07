@@ -4815,12 +4815,17 @@
       nameSpace and name attributes of GeneralName may be 'OGC' and 'catalogue'
     </description>
     <helper>
-      <option value="OGC:WMS">OGC Web Map Service (OGC:WMS)</option>
-      <option value="OGC:WFS">OGC Web Feature Service (OGC:WFS)</option>
-      <option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
-      <option value="W3C:HTML:DOWNLOAD">Download (W3C:HTML:DOWNLOAD)</option>
-      <option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>
-      <!--INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service 
+      <option value="ESRI:REST">ESRI Rest</option>
+      <option value="OGC:WMS">OGC Web Map Service</option>
+      <option value="OGC:WMTS">OGC Web Map Tile Service</option>
+      <option value="OGC:WFS">OGC Web Feature Service</option>
+      <option value="OGC:WCS">OGC Web Coverage Service</option>
+      <option value="OGC:WPS">OGC Web Processing Service</option>
+      <option value="atom:feed">ATOM feed</option>
+      <option value="Application">Application</option>
+      <option value="Carte statique">Carte statique</option>
+      <option value="Série de cartes statiques">Série de cartes statiques</option>
+      <!--INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service
         type <option value="discovery">Discovery Service (discovery)</option> <option 
         value="view">View Service (view)</option> <option value="download">Download 
         Service (download)</option> <option value="transformation">Transformation 
