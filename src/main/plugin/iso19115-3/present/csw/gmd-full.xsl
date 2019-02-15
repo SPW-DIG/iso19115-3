@@ -4,6 +4,7 @@
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
   xmlns:gmd="http://www.isotc211.org/2005/gmd"
   xmlns:srv="http://www.isotc211.org/2005/srv"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
   exclude-result-prefixes="#all">
 
