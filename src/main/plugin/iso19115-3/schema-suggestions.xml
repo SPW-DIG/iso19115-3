@@ -191,12 +191,12 @@
   </field>
 
 
-  <field name="mco:MD_Constraints">
-    <suggest name="mco:useLimitation"/>
-  </field>
+  <!--<field name="mco:MD_Constraints">-->
+    <!--<suggest name="mco:useLimitation"/>-->
+  <!--</field>-->
   
   <field name="mco:MD_LegalConstraints">
-    <suggest name="mco:useLimitation"/>
+    <!--<suggest name="mco:useLimitation"/>-->
     <suggest name="mco:accessConstraints"/>
     <suggest name="mco:useConstraints"/>
     <suggest name="mco:otherContraints"/>
@@ -204,7 +204,7 @@
   
   <field name="mco:MD_SecurityContraints">
     <suggest name="mco:classification"/>
-    <suggest name="mco:useLimitation"/>
+    <!--<suggest name="mco:useLimitation"/>-->
   </field>
 
 
