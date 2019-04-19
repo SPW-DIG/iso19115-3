@@ -320,7 +320,6 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:message><xsl:value-of select="concat(name($theElement), $xpath)"/>== </xsl:message>
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="$labelCfg"/>
