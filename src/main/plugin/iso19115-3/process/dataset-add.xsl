@@ -89,7 +89,7 @@ a coupledResource reference.
               
               <xsl:if test="$uuidref">
                 <srv:operatesOn uuidref="{$uuidref}"
-                  xlink:href="{$siteUrl}/csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://standards.iso.org/iso/19115/-3/mdb/1.0&amp;elementSetName=full&amp;id={$uuidref}"/>
+                  xlink:href="{$siteUrl}/csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>
               </xsl:if>
               
               <xsl:copy-of
