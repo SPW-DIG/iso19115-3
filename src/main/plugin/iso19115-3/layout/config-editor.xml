@@ -96,6 +96,13 @@
 
     <for name="mrs:referenceSystemIdentifier" addDirective="data-gn-crs-selector"/>
 
+    <for name="cit:title"
+         xpath="/mdb:MD_Metadata/mdb:dataQualityInfo/mdq:DQ_DataQuality/mdq:report/mdq:DQ_DomainConsistency/mdq:result/mdq:DQ_ConformanceResult/mdq:specification/cit:CI_Citation/cit:title"
+         use="data-gn-keyword-picker">
+      <directiveAttributes data-thesaurus-key="external.theme.inspire-technical-guidelines"
+                           data-thesaurus-concept-id-attribute="xlinkCOLONhref"/>
+    </for>
+
     <for name="mdb:contact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
         data-template-add-action="true"
