@@ -14,6 +14,12 @@
         <value>mdb:identificationInfo/*/mri:citation/*/cit:title/*/lan:textGroup/lan:LocalisedCharacterString</value>
       </util:list>
     </property>
+    <property name="elementsToProcess">
+      <util:list value-type="java.lang.String">
+        <value>gco:CharacterString</value>
+        <value>gcx:Anchor</value>
+      </util:list>
+    </property>
     <property name="savedQueries">
       <list>
         <bean class="org.fao.geonet.kernel.schema.SavedQuery">
