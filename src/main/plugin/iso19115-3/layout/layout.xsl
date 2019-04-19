@@ -144,7 +144,7 @@
 
   <!-- Render simple element which usually match a form field -->
   <xsl:template mode="mode-iso19115-3" priority="200"
-                match="*[gco:CharacterString|gco:Integer|gco:Decimal|
+                match="*[gco:CharacterString|gcx:Anchor|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
        gco:Scale|gco:RecordType|gmx:MimeFileType|gco:LocalName|gco:ScopedName|gco:RecordType|
        gco:Record|lan:PT_FreeText|mcc:URI]">
@@ -153,7 +153,7 @@
     <xsl:param name="overrideLabel" select="''" required="no"/>
     <xsl:param name="isDisabled" required="no"/>
     <xsl:param name="refToDelete" select="''" required="no"/>
-
+    <xsl:param name="config" required="no"/>
 
     <xsl:variable name="elementName" select="name()"/>
 
@@ -196,7 +196,7 @@
 
     <xsl:variable name="hasPTFreeText" select="count(lan:PT_FreeText) > 0"/>
     <xsl:variable name="hasOnlyPTFreeText"
-                  select="count(lan:PT_FreeText) > 0 and count(gco:CharacterString) = 0"/>
+                  select="count(lan:PT_FreeText) > 0 and count(gco:CharacterString|gcx:Anchor) = 0"/>
 
 
     <xsl:variable name="isMultilingualElement"
@@ -206,10 +206,10 @@
 
     <!-- For some fields, always display attributes.
     TODO: move to editor config ? -->
-    <xsl:variable name="forceDisplayAttributes" select="false()"/>
+    <xsl:variable name="forceDisplayAttributes" select="count(gcx:Anchor) > 0"/>
 
     <xsl:variable name="monoLingualValue"
-                  select="gco:CharacterString|gco:Integer|gco:Decimal|
+                  select="gco:CharacterString|gcx:Anchor|gco:Integer|gco:Decimal|
                           gco:Boolean|gco:Real|gco:Measure|gco:Length|
                           gco:Distance|gco:Angle|gmx:FileName|
                           gco:Scale|gco:RecordType|gmx:MimeFileType|
@@ -247,7 +247,7 @@
                            select="
         */@*|
         */gn:attribute[not(@name = parent::node()/@*/name())]">
-        <xsl:with-param name="ref" select="*/gn:element/@ref"/>
+        <xsl:with-param name="ref" select="$theElement/gn:element/@ref"/>
         <xsl:with-param name="insertRef" select="$theElement/gn:element/@ref"/>
       </xsl:apply-templates>
     </xsl:variable>
@@ -263,7 +263,7 @@
     <xsl:variable name="values">
       <xsl:if test="$isMultilingualElement">
         <xsl:variable name="text"
-                      select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+                      select="normalize-space(gco:CharacterString|gcx:Anchor)"/>
 
         <values>
           <!--
@@ -320,6 +320,8 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:message><xsl:value-of select="concat(name($theElement), $xpath)"/>== </xsl:message>
+
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="$labelCfg"/>
       <xsl:with-param name="value" select="if ($isMultilingualElement) then $values else *"/>
@@ -330,7 +332,23 @@
       <xsl:with-param name="xpath" select="$xpath"/>
       <xsl:with-param name="attributesSnippet" select="$attributes"/>
       <xsl:with-param name="type"
-                      select="gn-fn-metadata:getFieldType($editorConfig, name(), name($theElement), $xpath)"/>
+                      select="if ($config and $config/@use != '')
+                              then $config/@use
+                              else gn-fn-metadata:getFieldType($editorConfig, name(),
+                                       name($theElement), $xpath)"/>
+      <xsl:with-param name="directiveAttributes">
+        <xsl:choose>
+          <xsl:when test="$config and $config/@use != ''">
+            <xsl:element name="directive">
+              <xsl:attribute name="data-directive-name" select="$config/@use"/>
+              <xsl:copy-of select="$config/directiveAttributes/@*"/>
+            </xsl:element>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="gn-fn-metadata:getFieldDirective($editorConfig, name())"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:with-param>
       <xsl:with-param name="name" select="if ($isEditing) then $theElement/gn:element/@ref else ''"/>
       <xsl:with-param name="editInfo" select="$theElement/gn:element"/>
       <xsl:with-param name="parentEditInfo" select="if ($refToDelete) then $refToDelete else gn:element"/>
