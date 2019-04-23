@@ -560,7 +560,13 @@
     </gmd:DQ_QuantitativeResult>
   </xsl:template>
 
-
+  <!-- maintenanceScope was updateScope -->
+  <xsl:template match="mmi:maintenanceScope">
+    <gmd:updateScope>
+      <!-- "//" is a temporaty fix for invalid 115-3 records -->
+      <xsl:apply-templates select="*/mcc:level//mcc:MD_ScopeCode"/>
+    </gmd:updateScope>
+  </xsl:template>
 
 
   <xsl:template match="cit:CI_Citation">
