@@ -224,6 +224,10 @@
         <xsl:variable name="nameSpacePrefix">
           <xsl:call-template name="getNamespacePrefix"/>
         </xsl:variable>
+
+        <xsl:variable name="isService"
+                      select="local-name(.) = 'SV_ServiceIdentification'"/>
+
         <xsl:element name="{concat($nameSpacePrefix,':',local-name(.))}">
           <xsl:apply-templates select="@*"/>
           <xsl:apply-templates select="mri:citation"/>
@@ -304,7 +308,7 @@
           <xsl:apply-templates select="srv2:containsOperations"/>
 
           <!-- Add mandatory contains operation -->
-          <xsl:if test="not(srv2:containsOperations)">
+          <xsl:if test="$isService and not(srv2:containsOperations)">
             <srv:containsOperations/>
           </xsl:if>
 
