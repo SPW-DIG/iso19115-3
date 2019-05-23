@@ -1047,12 +1047,13 @@
                        cit:CI_Citation/cit:onlineResource|
                        srv2:parameter|
                        mri:keywordClass|
+                       mri:temporalResolution|
                        mrd:formatSpecificationCitation|
                        mdb:dateInfo|
                        mdb:metadataProfile|
-                       mri:temporalResolution|
                        mdb:alternativeMetadataReference|
                        mdb:metadataLinkage|
+                       mcc:MD_Identifier/mcc:description|
                        mrl:LI_Source/mrl:scope|
                        mrl:sourceSpatialResolution|
                        mdq:derivedElement" priority="2"/>
