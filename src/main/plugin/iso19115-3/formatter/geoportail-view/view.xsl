@@ -262,7 +262,7 @@
                               contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
                                        'Thèmes du géoportail wallon')]/* or $metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
                               contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
-                                           'INSPIRE')] or $metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
+                                           'GEMET - INSPIRE themes, version 1.0')] or $metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
                               contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
                                            'GEMET - Concepts, version 2.4')] or $metadata//mdb:identificationInfo/mri:MD_DataIdentification/mri:topicCategory/mri:MD_TopicCategoryCode">
             <xsl:if test="$metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
@@ -276,11 +276,11 @@
             </xsl:if>
             <xsl:if test="$metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
                               contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
-                                           'INSPIRE')]">
+                                           'GEMET - INSPIRE themes, version 1.0')]">
               <h6><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings,'inspireTheme')"/> :</h6>
               <p><xsl:value-of select="string-join($metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
                               contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
-                                           'INSPIRE')]/*/mri:keyword,';')"/></p>
+                                           'GEMET - INSPIRE themes, version 1.0')]/*/mri:keyword,';')"/></p>
             </xsl:if>
             <xsl:if test="$metadata/mdb:identificationInfo/*/mri:descriptiveKeywords[
                               contains(*/mri:thesaurusName/*/cit:title/gco:CharacterString,
