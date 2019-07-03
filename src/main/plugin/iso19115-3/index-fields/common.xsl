@@ -657,6 +657,13 @@
         </xsl:call-template>
       </xsl:for-each>
 
+      <xsl:for-each select="mri:pointOfContact/cit:CI_Responsibility/cit:party/cit:CI_Individual[not(cit:CI_Organisation)]">
+        <xsl:call-template name="ContactIndexing">
+          <xsl:with-param name="lang" select="$lang"/>
+          <xsl:with-param name="langId" select="$langId"/>
+        </xsl:call-template>
+      </xsl:for-each>
+
 
 
       <!-- FIXME: Additional constraints have been created in the mco schema -->
@@ -1088,7 +1095,9 @@
     <xsl:param name="lang"/>
     <xsl:param name="langId"/>
 
-    <xsl:copy-of select="gn-fn-iso19115-3:index-field('orgName', cit:name, $langId)"/>
+    <xsl:if test="name(.) = 'cit:CI_Organisation'">
+      <xsl:copy-of select="gn-fn-iso19115-3:index-field('orgName', cit:name, $langId)"/>
+    </xsl:if>
     <xsl:variable name="role" select="../../cit:role/*/@codeListValue"/>
     <xsl:variable name="email" select="cit:contactInfo/cit:CI_Contact/
                                               cit:address/cit:CI_Address/
@@ -1102,7 +1111,10 @@
     <xsl:variable name="address" select="string-join(cit:contactInfo/*/cit:address/*/(
                                           cit:deliveryPoint|cit:postalCode|cit:city|
                                           cit:administrativeArea|cit:country)/gco:CharacterString/text(), ', ')"/>
-    <xsl:variable name="individualNames" select="''"/>
+    <xsl:variable name="individualNames"
+                  select="if (name(.) = 'cit:CI_Organisation')
+                          then string-join(cit:individual/*/cit:name/gco:CharacterString, ', ')
+                          else cit:name/gco:CharacterString"/>
     <xsl:variable name="positionName" select="''"/>
 
     <xsl:variable name="orgName">
